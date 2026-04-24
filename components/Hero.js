@@ -62,7 +62,13 @@ export default function Hero({ openModal }) {
           font-weight: 800;
           line-height: 1.2;
           margin-bottom: 20px;
-          color: var(--text);
+          color: #0f172a;
+        }
+        .hero-subtitle {
+          font-size: 1.1rem;
+          color: #334155;
+          margin-bottom: 20px;
+          line-height: 1.6;
         }
         .mobile-break {
           display: none;
@@ -78,7 +84,7 @@ export default function Hero({ openModal }) {
           align-items: center;
           gap: 8px;
           font-size: 0.95rem;
-          color: var(--text);
+          color: #0f172a;
           font-weight: 500;
         }
         .badge-icon-green {

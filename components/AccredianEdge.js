@@ -330,17 +330,9 @@ export default function AccredianEdgeSection() {
         }}>›</button>
       </div>
 
-      {/* Mobile USPS Alternative */}
-      <div className="mobile-usps-list">
-        {nodes.map(node => (
-          <div key={node.id} className="mobile-usps-card">
-            <div className="mobile-usps-icon">{node.icon}</div>
-            <div className="mobile-usps-content">
-              <h4>{node.label}</h4>
-              <p>{node.desc}</p>
-            </div>
-          </div>
-        ))}
+      {/* Mobile USPS Image */}
+      <div className="mobile-usps">
+        <img src="/images/usps.png" alt="Our USPS" style={{ width: '100%', height: 'auto', maxWidth: '600px', margin: '0 auto', display: 'block' }} />
       </div>
 
       <div className="container">
@@ -355,47 +347,8 @@ export default function AccredianEdgeSection() {
           .desktop-slider {
             display: flex;
           }
-          .mobile-usps-list {
+          .mobile-usps {
             display: none;
-          }
-          .mobile-usps-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-          }
-          .mobile-usps-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #06b6d4, #2563eb);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
-          }
-          .mobile-usps-icon svg {
-            width: 24px;
-            height: 24px;
-          }
-          .mobile-usps-content h4 {
-            margin: 0 0 4px 0;
-            font-size: 1.1rem;
-            color: var(--text);
-            font-weight: 700;
-          }
-          .mobile-usps-content p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.4;
           }
           .new-domain-card {
             background: var(--card-bg);
@@ -435,7 +388,7 @@ export default function AccredianEdgeSection() {
             .desktop-slider {
               display: none !important;
             }
-            .mobile-usps-list {
+            .mobile-usps {
               display: block;
               margin-top: 20px;
               margin-bottom: 40px;
