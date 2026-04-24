@@ -1,0 +1,162 @@
+﻿'use client';
+import { useRef } from 'react';
+import { useInView } from '@/hooks/useInView';
+
+export default function AccredianEdge() {
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, 0.1);
+
+  const domains = [
+    {
+      title: 'Product & Innovation Hub',
+      icon: <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" />
+    },
+    {
+      title: 'Gen-AI Mastery',
+      icon: <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+    },
+    {
+      title: 'Leadership Elevation',
+      icon: <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+    },
+    {
+      title: 'Tech & Data Insights',
+      icon: <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+    },
+    {
+      title: 'Operations Excellence',
+      icon: <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+    },
+    {
+      title: 'Digital Enterprise',
+      icon: <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" />
+    }
+  ];
+
+  const courseTypes = [
+    { 
+      title: 'Program Specific', 
+      sub: 'Comprehensive Journeys',
+      icon: <path d="M20 6h-2V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2h2c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM16 20H4V4h12v16zm4-4h-2V8h2v8zm-4-4H8v2h8v-2zm0-4H8v2h8V8z"/>
+    },
+    { 
+      title: 'Industry Specific', 
+      sub: 'Tailored Frameworks',
+      icon: <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+    },
+    { 
+      title: 'Topic Specific', 
+      sub: 'Focused Masterclasses',
+      icon: <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z M9.4 14.4L4.6 9.6l4.8-4.8 1.4 1.4-3.4 3.4 3.4 3.4-1.4 1.4zm5.2 0l-1.4-1.4 3.4-3.4-3.4-3.4 1.4-1.4 4.8 4.8-4.8 4.8z"/>
+    },
+    { 
+      title: 'Level Specific', 
+      sub: 'Role-Based Training',
+      icon: <path d="M16 15H8v-2h8v2zm0-4H8V9h8v2zm-2-4H8V5h6v2zM19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+    }
+  ];
+
+  return (
+    <section id="edge" className="section" ref={sectionRef}>
+      <div className="container">
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>The Accredian Edge</h2>
+        
+        <div className={`edge-nodes animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '100ms'}}>
+          <div className="edge-arrow"></div>
+          <div className="edge-node">
+            <div className="edge-circle">1</div>
+            <div className="edge-title">Tailored Solutions</div>
+            <div className="edge-tooltip">Customized to your exact organizational needs</div>
+          </div>
+          <div className="edge-node">
+            <div className="edge-circle filled">2</div>
+            <div className="edge-title">Expert Trainers</div>
+            <div className="edge-tooltip">Learn directly from seasoned industry veterans</div>
+          </div>
+          <div className="edge-node">
+            <div className="edge-circle">3</div>
+            <div className="edge-title">Innovative Framework</div>
+            <div className="edge-tooltip">Modern methodologies designed for quick adoption</div>
+          </div>
+          <div className="edge-node">
+            <div className="edge-circle filled">4</div>
+            <div className="edge-title">Diverse Offerings</div>
+            <div className="edge-tooltip">A broad curriculum spanning multiple high-demand domains</div>
+          </div>
+          <div className="edge-node">
+            <div className="edge-circle">5</div>
+            <div className="edge-title">Measurable ROI</div>
+            <div className="edge-tooltip">Track your success with concrete performance metrics</div>
+          </div>
+          <div className="edge-node">
+            <div className="edge-circle filled">6</div>
+            <div className="edge-title">Flexible Delivery</div>
+            <div className="edge-tooltip">Learn your way: online, hybrid, or entirely on-site</div>
+          </div>
+        </div>
+
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', transitionDelay: '200ms'}}>Our Domain Expertise</h2>
+        
+        <div className="domain-grid">
+          {domains.map((domain, idx) => (
+            <div 
+              key={idx} 
+              className={`domain-card animate-on-scroll ${inView ? 'visible' : ''}`} 
+              style={{transitionDelay: `${300 + (idx * 100)}ms`}}
+            >
+              <div className="domain-icon-wrapper">
+                <svg className="domain-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  {domain.icon}
+                </svg>
+              </div>
+              <h3>{domain.title}</h3>
+            </div>
+          ))}
+        </div>
+        <div 
+          className={`domain-card domain-card-centered animate-on-scroll ${inView ? 'visible' : ''}`}
+          style={{transitionDelay: '900ms'}}
+        >
+          <div className="domain-icon-wrapper">
+            <svg className="domain-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
+            </svg>
+          </div>
+          <h3>Fintech Innovation Lab</h3>
+        </div>
+
+        <div className="course-types">
+          {courseTypes.map((course, idx) => (
+            <div 
+              key={idx} 
+              className={`course-card animate-on-scroll ${inView ? 'visible' : ''}`}
+              style={{transitionDelay: `${200 + (idx * 100)}ms`}}
+            >
+              <div className="course-header">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  {course.icon}
+                </svg>
+              </div>
+              <div className="course-body">
+                <div className="course-title">{course.title}</div>
+                <div className="course-subtitle">{course.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className={`audience-banner animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '400ms'}}>
+          <div className="audience-title">Who Should<br/>Join?</div>
+          <div className="audience-group">
+            <h3>Tech Professionals</h3>
+            <p>Engineers, Data Scientists, and Developers looking to upskill.</p>
+          </div>
+          <div className="audience-group">
+            <h3>Non-Tech Professionals</h3>
+            <p>Managers, Marketers, and Leaders aiming to stay relevant.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -72,7 +72,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
-            <span className="nav-logo-text">ACCREDIAN</span>
+            <span className="nav-logo-text">accredian</span>
             <span className="nav-logo-sub">credentials that matter</span>
           </div>
           

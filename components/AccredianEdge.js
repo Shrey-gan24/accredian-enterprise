@@ -1,162 +1,552 @@
-'use client';
-import { useRef } from 'react';
-import { useInView } from '@/hooks/useInView';
+'use client'
+import { useRef } from 'react'
+import { useInView } from '@/hooks/useInView'
 
-export default function AccredianEdge() {
+const nodes = [
+  {
+    id: 1,
+    label: 'Tailored Solutions',
+    desc: "Programs customized to your organization's goals and challenges.",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V17H9v-2.8C7.21 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/>
+        <line x1="9" y1="21" x2="15" y2="21"/>
+      </svg>
+    ),
+    position: 'top',
+    isFirst: true
+  },
+  {
+    id: 2,
+    label: 'Expert Guidance',
+    desc: 'Learn from industry leaders with real-world success.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+        <path d="M16 11l1.5 1.5L22 8"/>
+      </svg>
+    ),
+    position: 'bottom'
+  },
+  {
+    id: 3,
+    label: 'Innovative Framework',
+    desc: 'Proprietary methods for impactful, application-driven results.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    ),
+    position: 'top'
+  },
+  {
+    id: 4,
+    label: 'Advanced Technology',
+    desc: 'State-of-the-art LMS for seamless learning experiences.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    ),
+    position: 'bottom'
+  },
+  {
+    id: 5,
+    label: 'Diverse Offerings',
+    desc: 'Courses across industries, skill levels, and emerging fields.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <line x1="15" y1="3" x2="21" y2="3"/>
+        <line x1="21" y1="3" x2="21" y2="9"/>
+        <line x1="9" y1="21" x2="3" y2="21"/>
+        <line x1="3" y1="21" x2="3" y2="15"/>
+        <line x1="21" y1="3" x2="14" y2="10"/>
+        <line x1="3" y1="21" x2="10" y2="14"/>
+      </svg>
+    ),
+    position: 'top'
+  },
+  {
+    id: 6,
+    label: 'Proven Impact',
+    desc: 'Trusted by leading organizations for measurable ROI.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="6"/>
+        <circle cx="12" cy="12" r="2"/>
+      </svg>
+    ),
+    position: 'bottom'
+  },
+  {
+    id: 7,
+    label: 'Flexible Delivery',
+    desc: 'Online and offline options tailored to your needs.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+    ),
+    position: 'top'
+  }
+];
+
+export default function AccredianEdgeSection() {
+  const scrollRef = useRef(null)
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, 0.1);
+
+  const scroll = (dir) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: dir * 220, behavior: 'smooth' })
+    }
+  }
 
   const domains = [
     {
       title: 'Product & Innovation Hub',
-      icon: <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V17H9v-2.8C7.21 13.16 6 11.22 6 9a6 6 0 0 1 6-6z"/>
+          <line x1="9" y1="21" x2="15" y2="21"/>
+        </svg>
+      )
     },
     {
       title: 'Gen-AI Mastery',
-      icon: <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <path d="M9.5 2a2.5 2.5 0 0 1 5 0v.5A2.5 2.5 0 0 1 17 5a2.5 2.5 0 0 1 2 4.5 3 3 0 0 1-3 3H8a3 3 0 0 1-3-3A2.5 2.5 0 0 1 7 5a2.5 2.5 0 0 1 2.5-2.5V2z"/>
+          <path d="M12 12v9M8 17h8"/>
+        </svg>
+      )
     },
     {
       title: 'Leadership Elevation',
-      icon: <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <circle cx="9" cy="7" r="3"/>
+          <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          <path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+        </svg>
+      )
     },
     {
       title: 'Tech & Data Insights',
-      icon: <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+      )
     },
     {
       title: 'Operations Excellence',
-      icon: <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      )
     },
     {
       title: 'Digital Enterprise',
-      icon: <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" />
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      )
+    },
+    {
+      title: 'Fintech Innovation Lab',
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+          <circle cx="8" cy="15" r="1" fill="#2563EB"/>
+          <circle cx="12" cy="15" r="1" fill="#2563EB"/>
+        </svg>
+      )
     }
   ];
 
-  const courseTypes = [
+  const courseSegments = [
     { 
       title: 'Program Specific', 
-      sub: 'Comprehensive Journeys',
-      icon: <path d="M20 6h-2V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2h2c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM16 20H4V4h12v16zm4-4h-2V8h2v8zm-4-4H8v2h8v-2zm0-4H8v2h8V8z"/>
+      sub: 'Certificate, Executive, Post Graduate Certificate',
+      image: '/images/course_program.png'
     },
     { 
       title: 'Industry Specific', 
-      sub: 'Tailored Frameworks',
-      icon: <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+      sub: 'IT, Healthcare, Retail, Finance, Education, Manufacturing',
+      image: '/images/course_industry.png'
     },
     { 
       title: 'Topic Specific', 
-      sub: 'Focused Masterclasses',
-      icon: <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z M9.4 14.4L4.6 9.6l4.8-4.8 1.4 1.4-3.4 3.4 3.4 3.4-1.4 1.4zm5.2 0l-1.4-1.4 3.4-3.4-3.4-3.4 1.4-1.4 4.8 4.8-4.8 4.8z"/>
+      sub: 'Machine Learning, Design, Analytics, Cybersecurity, Cloud',
+      image: '/images/course_topic.png'
     },
     { 
       title: 'Level Specific', 
-      sub: 'Role-Based Training',
-      icon: <path d="M16 15H8v-2h8v2zm0-4H8V9h8v2zm-2-4H8V5h6v2zM19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+      sub: 'Senior Leadership, Mid-Career Professionals, Freshers',
+      image: '/images/course_level.png'
     }
   ];
 
   return (
-    <section id="edge" className="section" ref={sectionRef}>
+    <section id="accredian-edge" ref={sectionRef} style={{ padding: '80px 40px', background: 'var(--bg)' }}>
+      {/* Heading */}
+      <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+        <h2 style={{ fontSize: '2.2rem', fontWeight: '700', color: 'var(--text)' }}>
+          The <span style={{ color: '#2563EB' }}>Accredian Edge</span>
+        </h2>
+        <p style={{ color: 'var(--text-muted)', marginTop: '8px', fontSize: '1rem' }}>
+          Key Aspects of <span style={{ color: '#2563EB' }}>Our Strategic Training</span>
+        </p>
+      </div>
+
+      {/* Slider wrapper */}
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+
+        {/* Left scroll button */}
+        <button onClick={() => scroll(-1)} style={{
+          background: 'var(--card-bg)', border: '1px solid var(--border)', borderRadius: '50%',
+          width: '40px', height: '40px', cursor: 'pointer', fontSize: '1.2rem',
+          color: 'var(--text-muted)', flexShrink: 0, marginRight: '16px', zIndex: 10,
+          boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+        }}>‹</button>
+
+        {/* Scrollable row */}
+        <div ref={scrollRef} style={{
+          display: 'flex', overflowX: 'auto',
+          scrollbarWidth: 'none', flex: 1,
+          position: 'relative', height: '400px'
+        }}>
+          {/* SVG Sine Wave Background */}
+          <svg style={{ position: 'absolute', top: 0, left: 0, height: '400px', width: '1400px', zIndex: 0 }}>
+            <path 
+              d="M 100 140 C 200 140, 200 260, 300 260 C 400 260, 400 140, 500 140 C 600 140, 600 260, 700 260 C 800 260, 800 140, 900 140 C 1000 140, 1000 260, 1100 260 C 1200 260, 1200 140, 1300 140" 
+              fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="6 6" 
+            />
+            {/* Double arrows at midpoints */}
+            <g fill="#9ca3af" fontSize="24" fontFamily="sans-serif" textAnchor="middle">
+              <text x="200" y="208">»</text>
+              <text x="400" y="208">»</text>
+              <text x="600" y="208">»</text>
+              <text x="800" y="208">»</text>
+              <text x="1000" y="208">»</text>
+              <text x="1200" y="208">»</text>
+            </g>
+          </svg>
+
+          {/* Nodes */}
+          <div style={{ display: 'flex', position: 'relative', zIndex: 1, width: '1400px' }}>
+            {nodes.map((node, index) => (
+              <div key={node.id} style={{ width: '200px', height: '400px', flexShrink: 0, position: 'relative' }}>
+                
+                {node.position === 'top' ? (
+                  <>
+                    {/* Text Area */}
+                    <div style={{ position: 'absolute', top: '0px', left: '96px', width: '220px' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                        <span style={{ color: '#2563EB', fontSize: '14px', lineHeight: '1.2' }}>●</span>
+                        <p style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text)', margin: 0, lineHeight: '1.2' }}>{node.label}</p>
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0, paddingLeft: '20px', lineHeight: '1.4' }}>{node.desc}</p>
+                    </div>
+                    {/* Vertical line */}
+                    <div style={{ position: 'absolute', top: '15px', left: '100px', width: '2px', height: '65px', background: '#2563EB', transform: 'translateX(-50%)' }} />
+                    {/* Circle */}
+                    <div style={{ 
+                      position: 'absolute', top: '90px', left: '50px',
+                      width: '100px', height: '100px', borderRadius: '50%',
+                      background: node.isFirst ? 'linear-gradient(135deg, #06b6d4, #2563eb)' : '#1e3a8a',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      border: '6px solid var(--bg)',
+                      boxShadow: '0 0 0 1px #cbd5e1, 0 10px 25px rgba(37,99,235,0.15)',
+                      color: '#fff'
+                    }}>
+                      {node.icon}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Circle */}
+                    <div style={{ 
+                      position: 'absolute', top: '210px', left: '50px',
+                      width: '100px', height: '100px', borderRadius: '50%',
+                      background: node.isFirst ? 'linear-gradient(135deg, #06b6d4, #2563eb)' : '#1e3a8a',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      border: '6px solid var(--bg)',
+                      boxShadow: '0 0 0 1px #cbd5e1, 0 10px 25px rgba(37,99,235,0.15)',
+                      color: '#fff'
+                    }}>
+                      {node.icon}
+                    </div>
+                    {/* Vertical line */}
+                    <div style={{ position: 'absolute', top: '320px', left: '100px', width: '2px', height: '65px', background: '#2563EB', transform: 'translateX(-50%)' }} />
+                    {/* Text Area */}
+                    <div style={{ position: 'absolute', top: '380px', left: '96px', width: '220px' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                        <span style={{ color: '#2563EB', fontSize: '14px', lineHeight: '1.2' }}>●</span>
+                        <p style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text)', margin: 0, lineHeight: '1.2' }}>{node.label}</p>
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0, paddingLeft: '20px', lineHeight: '1.4' }}>{node.desc}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right scroll button */}
+        <button onClick={() => scroll(1)} style={{
+          background: 'var(--card-bg)', border: '1px solid var(--border)', borderRadius: '50%',
+          width: '40px', height: '40px', cursor: 'pointer', fontSize: '1.2rem',
+          color: 'var(--text-muted)', flexShrink: 0, marginLeft: '16px', zIndex: 10,
+          boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+        }}>›</button>
+      </div>
+
       <div className="container">
-        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>The Accredian Edge</h2>
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', marginBottom: '8px', transitionDelay: '200ms'}}>
+          Our <span style={{color:'#2563EB'}}>Domain Expertise</span>
+        </h2>
+        <p style={{ fontSize: '1rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px', marginBottom: '40px' }}>
+          <span style={{color:'#2563EB'}}>Specialized Programs</span> Designed to Fuel Innovation
+        </p>
         
-        <div className={`edge-nodes animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '100ms'}}>
-          <div className="edge-arrow"></div>
-          <div className="edge-node">
-            <div className="edge-circle">1</div>
-            <div className="edge-title">Tailored Solutions</div>
-            <div className="edge-tooltip">Customized to your exact organizational needs</div>
-          </div>
-          <div className="edge-node">
-            <div className="edge-circle filled">2</div>
-            <div className="edge-title">Expert Trainers</div>
-            <div className="edge-tooltip">Learn directly from seasoned industry veterans</div>
-          </div>
-          <div className="edge-node">
-            <div className="edge-circle">3</div>
-            <div className="edge-title">Innovative Framework</div>
-            <div className="edge-tooltip">Modern methodologies designed for quick adoption</div>
-          </div>
-          <div className="edge-node">
-            <div className="edge-circle filled">4</div>
-            <div className="edge-title">Diverse Offerings</div>
-            <div className="edge-tooltip">A broad curriculum spanning multiple high-demand domains</div>
-          </div>
-          <div className="edge-node">
-            <div className="edge-circle">5</div>
-            <div className="edge-title">Measurable ROI</div>
-            <div className="edge-tooltip">Track your success with concrete performance metrics</div>
-          </div>
-          <div className="edge-node">
-            <div className="edge-circle filled">6</div>
-            <div className="edge-title">Flexible Delivery</div>
-            <div className="edge-tooltip">Learn your way: online, hybrid, or entirely on-site</div>
-          </div>
-        </div>
+        <style>{`
+          .new-domain-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+          }
+          .new-domain-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+          }
+        `}</style>
 
-        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', transitionDelay: '200ms'}}>Our Domain Expertise</h2>
-        
-        <div className="domain-grid">
-          {domains.map((domain, idx) => (
-            <div 
-              key={idx} 
-              className={`domain-card animate-on-scroll ${inView ? 'visible' : ''}`} 
-              style={{transitionDelay: `${300 + (idx * 100)}ms`}}
-            >
-              <div className="domain-icon-wrapper">
-                <svg className="domain-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  {domain.icon}
-                </svg>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '24px' }}>
+          {domains.slice(0, 6).map((domain, idx) => (
+            <div key={idx} className="new-domain-card">
+              <div style={{ marginBottom: '16px' }}>
+                {domain.icon}
               </div>
-              <h3>{domain.title}</h3>
+              <div style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text)' }}>{domain.title}</div>
             </div>
           ))}
         </div>
-        <div 
-          className={`domain-card domain-card-centered animate-on-scroll ${inView ? 'visible' : ''}`}
-          style={{transitionDelay: '900ms'}}
-        >
-          <div className="domain-icon-wrapper">
-            <svg className="domain-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
-            </svg>
+        
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="new-domain-card" style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
+            <div style={{ marginBottom: '16px' }}>
+              {domains[6].icon}
+            </div>
+            <div style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text)' }}>{domains[6].title}</div>
           </div>
-          <h3>Fintech Innovation Lab</h3>
         </div>
 
-        <div className="course-types">
-          {courseTypes.map((course, idx) => (
-            <div 
-              key={idx} 
-              className={`course-card animate-on-scroll ${inView ? 'visible' : ''}`}
-              style={{transitionDelay: `${200 + (idx * 100)}ms`}}
-            >
-              <div className="course-header">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  {course.icon}
-                </svg>
-              </div>
-              <div className="course-body">
-                <div className="course-title">{course.title}</div>
-                <div className="course-subtitle">{course.sub}</div>
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', marginBottom: '8px', transitionDelay: '200ms'}}>
+          Tailored <span style={{color:'#2563EB'}}>Course Segmentation</span>
+        </h2>
+        <p style={{ fontSize: '1rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px', marginBottom: '40px' }}>
+          Explore <span style={{color:'#2563EB'}}>Custom-fit Courses</span> Designed to Address Every Professional Focus
+        </p>
+
+        <style>{`
+          .segment-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+          }
+          .segment-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+          }
+          .segment-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+          }
+          .segment-body {
+            padding: 24px 16px;
+          }
+          .segment-title {
+            color: #2563EB;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+          }
+          .segment-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+          }
+          @media (max-width: 992px) {
+            .segment-grid {
+              grid-template-columns: repeat(2, 1fr) !important;
+            }
+          }
+          @media (max-width: 600px) {
+            .segment-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        `}</style>
+
+        <div className="segment-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '40px' }}>
+          {courseSegments.map((course, idx) => (
+            <div key={idx} className="segment-card">
+              <img src={course.image} alt={course.title} className="segment-img" />
+              <div className="segment-body">
+                <div className="segment-title">{course.title}</div>
+                <div className="segment-sub">{course.sub}</div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className={`audience-banner animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '400ms'}}>
-          <div className="audience-title">Who Should<br/>Join?</div>
-          <div className="audience-group">
-            <h3>Tech Professionals</h3>
-            <p>Engineers, Data Scientists, and Developers looking to upskill.</p>
+        <style>{`
+          .new-audience-banner {
+            background-color: #2563EB;
+            border-radius: 12px;
+            padding: 48px;
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+          }
+          .audience-left {
+            flex: 0 0 45%;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+          }
+          .audience-right {
+            flex: 0 0 50%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            z-index: 2;
+          }
+          .audience-image {
+            margin-top: auto;
+            align-self: flex-start;
+            max-width: 100%;
+            width: 320px;
+            object-fit: contain;
+            mix-blend-mode: normal;
+          }
+          .audience-item-icon {
+            display: inline-flex;
+            margin-bottom: 12px;
+          }
+          @media (max-width: 900px) {
+            .new-audience-banner {
+              flex-direction: column;
+              padding: 32px;
+            }
+            .audience-left {
+              margin-bottom: 32px;
+            }
+            .audience-image {
+              margin-top: 32px;
+            }
+          }
+          @media (max-width: 600px) {
+            .audience-right {
+              grid-template-columns: 1fr;
+            }
+          }
+        `}</style>
+
+        <div className={`new-audience-banner animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '400ms'}}>
+          <div className="audience-left">
+            <p style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '8px' }}>Who Should Join?</p>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '700', lineHeight: '1.2' }}>Strategic Skill Enhancement</h2>
+            <img src="/images/who_should_join.png" alt="Professionals" className="audience-image" />
           </div>
-          <div className="audience-group">
-            <h3>Non-Tech Professionals</h3>
-            <p>Managers, Marketers, and Leaders aiming to stay relevant.</p>
+          <div className="audience-right">
+            <div>
+              <div className="audience-item-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                  <path d="M9 10l2 2 4-4"/>
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Tech Professionals</h3>
+              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Enhance expertise, embrace tech, drive innovation.</p>
+            </div>
+            <div>
+              <div className="audience-item-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                  <line x1="9" y1="7" x2="15" y2="13"/>
+                  <line x1="15" y1="7" x2="9" y2="13"/>
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Non-Tech Professionals</h3>
+              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Adapt digitally, collaborate in tech environments.</p>
+            </div>
+            <div>
+              <div className="audience-item-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Emerging Professionals</h3>
+              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Develop powerful skills for rapid career growth.</p>
+            </div>
+            <div>
+              <div className="audience-item-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Senior Professionals</h3>
+              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Strengthen leadership, enhance strategic decisions.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

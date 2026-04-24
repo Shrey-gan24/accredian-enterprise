@@ -9,7 +9,8 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="section how-it-works" ref={sectionRef}>
       <div className="container">
-        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>How We Deliver Results That Matter?</h2>
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>How We <span style={{color:'#2563EB'}}>Deliver Results</span> That Matter?</h2>
+        <p className={`section-subtitle animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '50ms', marginTop: '-30px', marginBottom: '50px'}}>A Structured Three-Step Approach to <span style={{color:'#2563EB'}}>Skill Development</span></p>
         
         <div className="steps-grid">
           <div className={`step-card animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '100ms'}}>

@@ -21,7 +21,7 @@ built as part of the Full Stack Developer Intern assignment.
 ## Setup Instructions
 
 1. Clone the repository
-   git clone https://github.com/YOUR_USERNAME/accredian-enterprise.git
+   git clone https://github.com/Shrey-gan24/accredian-enterprise.git
 
 2. Navigate into the project
    cd accredian-enterprise

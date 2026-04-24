@@ -49,8 +49,8 @@ export default function Stats() {
   return (
     <section id="stats" className="section stats" ref={sectionRef}>
       <div className="container">
-        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>Our Track Record</h2>
-        <p className={`section-subtitle animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '100ms'}}>The Numbers Behind Our Success</p>
+        <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`}>Our <span style={{color:'#2563EB'}}>Track Record</span></h2>
+        <p className={`section-subtitle animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '100ms'}}>The Numbers Behind <span style={{color:'#2563EB'}}>Our Success</span></p>
         
         <div className={`stats-grid animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '200ms'}}>
           <div className="stat-item">
