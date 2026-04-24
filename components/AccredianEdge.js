@@ -346,9 +346,25 @@ export default function AccredianEdgeSection() {
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transform: translateY(-2px);
           }
+          .custom-domain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+          }
+          @media (max-width: 900px) {
+            .custom-domain-grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+          @media (max-width: 600px) {
+            .custom-domain-grid {
+              grid-template-columns: 1fr;
+            }
+          }
         `}</style>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '24px' }}>
+        <div className="custom-domain-grid">
           {domains.slice(0, 6).map((domain, idx) => (
             <div key={idx} className="new-domain-card">
               <div style={{ marginBottom: '16px' }}>

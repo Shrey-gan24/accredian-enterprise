@@ -34,11 +34,11 @@ export default function Hero({ openModal }) {
             </button>
           </div>
           
-          <div className="hero-visual-img" style={{ position: 'relative', height: '100%', minHeight: '400px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <div className="hero-visual-img">
             <img 
               src="/images/hero_image.png" 
               alt="Professional corporate training" 
-              style={{ objectFit: 'cover', width: '100%', height: '100%', borderBottomRightRadius: '24px' }}
+              className="hero-image"
             />
           </div>
         </div>
@@ -64,12 +64,34 @@ export default function Hero({ openModal }) {
           font-size: 1.1rem;
         }
         .hero-visual-img {
+          position: relative;
+          height: 100%;
+          min-height: 400px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
           flex: 1;
+        }
+        .hero-image {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          border-bottom-right-radius: 24px;
         }
         @media (max-width: 768px) {
           .hero-badges-inline {
             flex-direction: column;
             gap: 10px;
+          }
+          .hero-visual-img {
+            min-height: auto;
+            margin-top: 30px;
+          }
+          .hero-image {
+            height: auto;
+            max-height: 350px;
+            border-radius: 16px;
+            object-position: top;
           }
         }
       `}</style>

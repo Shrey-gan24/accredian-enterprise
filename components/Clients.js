@@ -55,7 +55,7 @@ export default function Clients() {
           .clients-marquee {
             display: flex;
             align-items: center;
-            animation: scroll-clients 30s linear infinite;
+            animation: scroll-clients 15s linear infinite;
           }
           .clients-marquee:hover {
             animation-play-state: paused;
@@ -74,13 +74,14 @@ export default function Clients() {
             max-width: 220px;
             object-fit: contain;
             transition: transform 0.3s;
+            flex-shrink: 0;
           }
           .client-logo-img:hover {
             transform: scale(1.05);
           }
           @keyframes scroll-clients {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-100%); }
           }
           @media (max-width: 768px) {
             .clients-marquee-content {
@@ -102,16 +103,10 @@ export default function Clients() {
               {clientLogos.map((client, index) => (
                 <img key={`logo-1-${index}`} src={client.src} alt={client.name} className="client-logo-img" />
               ))}
-              {clientLogos.map((client, index) => (
-                <img key={`logo-1b-${index}`} src={client.src} alt={client.name} className="client-logo-img" />
-              ))}
             </div>
             <div className="clients-marquee-content">
               {clientLogos.map((client, index) => (
                 <img key={`logo-2-${index}`} src={client.src} alt={client.name} className="client-logo-img" />
-              ))}
-              {clientLogos.map((client, index) => (
-                <img key={`logo-2b-${index}`} src={client.src} alt={client.name} className="client-logo-img" />
               ))}
             </div>
           </div>
