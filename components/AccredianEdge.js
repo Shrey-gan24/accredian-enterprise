@@ -330,9 +330,17 @@ export default function AccredianEdgeSection() {
         }}>›</button>
       </div>
 
-      {/* Mobile USPS Image */}
-      <div className="mobile-usps">
-        <img src="/images/usps.png" alt="Our USPS" style={{ width: '100%', height: 'auto', maxWidth: '600px', margin: '0 auto', display: 'block' }} />
+      {/* Mobile USPS Alternative */}
+      <div className="mobile-usps-list">
+        {nodes.map(node => (
+          <div key={node.id} className="mobile-usps-card">
+            <div className="mobile-usps-icon">{node.icon}</div>
+            <div className="mobile-usps-content">
+              <h4>{node.label}</h4>
+              <p>{node.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="container">
@@ -347,8 +355,47 @@ export default function AccredianEdgeSection() {
           .desktop-slider {
             display: flex;
           }
-          .mobile-usps {
+          .mobile-usps-list {
             display: none;
+          }
+          .mobile-usps-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+          }
+          .mobile-usps-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
+          }
+          .mobile-usps-icon svg {
+            width: 24px;
+            height: 24px;
+          }
+          .mobile-usps-content h4 {
+            margin: 0 0 4px 0;
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 700;
+          }
+          .mobile-usps-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
           }
           .new-domain-card {
             background: var(--card-bg);
@@ -388,7 +435,7 @@ export default function AccredianEdgeSection() {
             .desktop-slider {
               display: none !important;
             }
-            .mobile-usps {
+            .mobile-usps-list {
               display: block;
               margin-top: 20px;
               margin-bottom: 40px;
@@ -400,22 +447,22 @@ export default function AccredianEdgeSection() {
               gap: 12px;
             }
             .new-domain-card {
-              flex-direction: row;
-              padding: 16px 12px;
-              justify-content: flex-start;
-              text-align: left;
-              gap: 12px;
+              flex-direction: column;
+              padding: 16px 8px;
+              justify-content: center;
+              text-align: center;
+              gap: 8px;
             }
             .new-domain-card-icon {
-              margin-bottom: 0;
+              margin-bottom: 4px;
             }
             .new-domain-card-icon svg {
-              width: 24px;
-              height: 24px;
+              width: 28px;
+              height: 28px;
             }
             .new-domain-card-title {
-              font-size: 0.8rem;
-              line-height: 1.2;
+              font-size: 0.85rem;
+              line-height: 1.3;
             }
             .new-domain-card:nth-child(7) {
               grid-column: span 2;

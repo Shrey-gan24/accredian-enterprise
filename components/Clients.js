@@ -55,7 +55,7 @@ export default function Clients() {
           .clients-marquee {
             display: flex;
             align-items: center;
-            animation: scroll-clients 30s linear infinite;
+            animation: scroll-clients 12s linear infinite;
           }
           .clients-marquee:hover {
             animation-play-state: paused;
