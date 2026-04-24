@@ -8,28 +8,41 @@ export default function Hero({ openModal }) {
         <div className="hero-card" style={{ background: '#f0f6ff', overflow: 'hidden' }}>
           <div className="hero-content">
             <h1 className="hero-title">
-              Next-Gen <span style={{color: '#2563EB'}}>Expertise</span><br />
-              For Your <span style={{color: '#2563EB'}}>Enterprise</span>
+              Next-Gen <span style={{color: '#2563EB'}}>Expertise</span> For<br className="mobile-break" /> Your <span style={{color: '#2563EB'}}>Enterprise</span>
             </h1>
             
             <p className="hero-subtitle">
-              Cultivate high-performance<br />
-              teams through expert learning.
+              Cultivate high-performance teams through expert learning.
             </p>
 
             <div className="hero-badges-inline">
               <span className="badge-inline">
-                <span className="badge-icon-green">✓</span> Tailored Solutions
+                <span className="badge-icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </span>
+                Tailored Solutions
               </span>
               <span className="badge-inline">
-                <span className="badge-icon-green">✓</span> Industry Insights
+                <span className="badge-icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </span>
+                Industry Insights
               </span>
               <span className="badge-inline">
-                <span className="badge-icon-green">✓</span> Expert Guidance
+                <span className="badge-icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </span>
+                Expert Guidance
+              </span>
+              <span className="badge-inline">
+                <span className="badge-icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </span>
+                Measurable Impact
               </span>
             </div>
             
-            <button className="btn" onClick={openModal} style={{ marginTop: '30px' }}>
+            <button className="btn hero-btn" onClick={openModal} style={{ marginTop: '30px' }}>
               Enquire Now
             </button>
           </div>
@@ -44,6 +57,16 @@ export default function Hero({ openModal }) {
         </div>
       </div>
       <style jsx>{`
+        .hero-title {
+          font-size: 3.5rem;
+          font-weight: 800;
+          line-height: 1.2;
+          margin-bottom: 20px;
+          color: var(--text);
+        }
+        .mobile-break {
+          display: none;
+        }
         .hero-badges-inline {
           display: flex;
           gap: 20px;
@@ -60,8 +83,9 @@ export default function Hero({ openModal }) {
         }
         .badge-icon-green {
           color: #10b981;
-          font-weight: bold;
-          font-size: 1.1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .hero-visual-img {
           position: relative;
@@ -79,19 +103,60 @@ export default function Hero({ openModal }) {
           border-bottom-right-radius: 24px;
         }
         @media (max-width: 768px) {
-          .hero-badges-inline {
+          .hero-card {
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 0 !important;
+          }
+          .hero-content {
+            order: 2;
+            padding: 0 20px 40px;
+            text-align: center;
+            display: flex;
             flex-direction: column;
-            gap: 10px;
+            align-items: center;
+          }
+          .hero-title {
+            font-size: 1.8rem;
+          }
+          .mobile-break {
+            display: block;
+          }
+          .hero-subtitle {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+          }
+          .hero-badges-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 10px;
+            text-align: left;
+            margin-top: 20px;
+            width: 100%;
+          }
+          .badge-inline {
+            font-size: 0.8rem;
+          }
+          .badge-icon-green svg {
+            width: 16px;
+            height: 16px;
+          }
+          .hero-btn {
+            width: 100%;
+            max-width: 320px;
           }
           .hero-visual-img {
+            order: 1;
             min-height: auto;
-            margin-top: 30px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-top: 20px;
           }
           .hero-image {
             height: auto;
             max-height: 350px;
-            border-radius: 16px;
-            object-position: top;
+            border-radius: 0;
+            object-fit: contain;
           }
         }
       `}</style>

@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useInView } from '@/hooks/useInView'
 
 const nodes = [
@@ -102,6 +102,16 @@ export default function AccredianEdgeSection() {
   const scrollRef = useRef(null)
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, 0.1);
+  const [activeSegment, setActiveSegment] = useState(0);
+
+  const handleSegmentScroll = (e) => {
+    const scrollLeft = e.target.scrollLeft;
+    const width = e.target.offsetWidth;
+    if (width > 0) {
+      const index = Math.round(scrollLeft / width);
+      if (index !== activeSegment) setActiveSegment(index);
+    }
+  };
 
   const scroll = (dir) => {
     if (scrollRef.current) {
@@ -217,7 +227,7 @@ export default function AccredianEdgeSection() {
       </div>
 
       {/* Slider wrapper */}
-      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+      <div className="desktop-slider" style={{ position: 'relative', alignItems: 'center', marginTop: '20px' }}>
 
         {/* Left scroll button */}
         <button onClick={() => scroll(-1)} style={{
@@ -320,6 +330,11 @@ export default function AccredianEdgeSection() {
         }}>›</button>
       </div>
 
+      {/* Mobile USPS Image */}
+      <div className="mobile-usps">
+        <img src="/images/usps.png" alt="Our USPS" style={{ width: '100%', height: 'auto', maxWidth: '600px', margin: '0 auto', display: 'block' }} />
+      </div>
+
       <div className="container">
         <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', marginBottom: '8px', transitionDelay: '200ms'}}>
           Our <span style={{color:'#2563EB'}}>Domain Expertise</span>
@@ -329,6 +344,12 @@ export default function AccredianEdgeSection() {
         </p>
         
         <style>{`
+          .desktop-slider {
+            display: flex;
+          }
+          .mobile-usps {
+            display: none;
+          }
           .new-domain-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -346,6 +367,14 @@ export default function AccredianEdgeSection() {
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transform: translateY(-2px);
           }
+          .new-domain-card-icon {
+            margin-bottom: 16px;
+          }
+          .new-domain-card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+          }
           .custom-domain-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -356,10 +385,37 @@ export default function AccredianEdgeSection() {
             .custom-domain-grid {
               grid-template-columns: repeat(2, 1fr);
             }
+            .desktop-slider {
+              display: none !important;
+            }
+            .mobile-usps {
+              display: block;
+              margin-top: 20px;
+              margin-bottom: 40px;
+            }
           }
           @media (max-width: 600px) {
             .custom-domain-grid {
-              grid-template-columns: 1fr;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
+            }
+            .new-domain-card {
+              flex-direction: row;
+              padding: 16px 12px;
+              justify-content: flex-start;
+              text-align: left;
+              gap: 12px;
+            }
+            .new-domain-card-icon {
+              margin-bottom: 0;
+            }
+            .new-domain-card-icon svg {
+              width: 24px;
+              height: 24px;
+            }
+            .new-domain-card-title {
+              font-size: 0.8rem;
+              line-height: 1.2;
             }
           }
         `}</style>
@@ -367,20 +423,20 @@ export default function AccredianEdgeSection() {
         <div className="custom-domain-grid">
           {domains.slice(0, 6).map((domain, idx) => (
             <div key={idx} className="new-domain-card">
-              <div style={{ marginBottom: '16px' }}>
+              <div className="new-domain-card-icon">
                 {domain.icon}
               </div>
-              <div style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text)' }}>{domain.title}</div>
+              <div className="new-domain-card-title">{domain.title}</div>
             </div>
           ))}
         </div>
         
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div className="new-domain-card" style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-            <div style={{ marginBottom: '16px' }}>
+            <div className="new-domain-card-icon">
               {domains[6].icon}
             </div>
-            <div style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text)' }}>{domains[6].title}</div>
+            <div className="new-domain-card-title">{domains[6].title}</div>
           </div>
         </div>
 
@@ -433,12 +489,39 @@ export default function AccredianEdgeSection() {
           }
           @media (max-width: 600px) {
             .segment-grid {
-              grid-template-columns: 1fr !important;
+              display: flex !important;
+              overflow-x: auto;
+              scroll-snap-type: x mandatory;
+              gap: 16px;
+              padding-bottom: 10px;
+              scrollbar-width: none;
+            }
+            .segment-grid::-webkit-scrollbar {
+              display: none;
+            }
+            .segment-card {
+              min-width: 100%;
+              scroll-snap-align: start;
+              flex-shrink: 0;
+            }
+            .segment-sub {
+              display: none;
+            }
+            .segment-title {
+              text-align: center;
+              font-size: 1.4rem;
+              margin-bottom: 0;
+            }
+            .segment-body {
+              padding: 16px;
+            }
+            .segment-dots {
+              display: flex !important;
             }
           }
         `}</style>
 
-        <div className="segment-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '40px' }}>
+        <div className="segment-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '20px' }} onScroll={handleSegmentScroll}>
           {courseSegments.map((course, idx) => (
             <div key={idx} className="segment-card">
               <img src={course.image} alt={course.title} className="segment-img" />
@@ -447,6 +530,16 @@ export default function AccredianEdgeSection() {
                 <div className="segment-sub">{course.sub}</div>
               </div>
             </div>
+          ))}
+        </div>
+        
+        <div className="segment-dots" style={{ display: 'none', justifyContent: 'center', gap: '8px', marginBottom: '40px' }}>
+          {courseSegments.map((_, idx) => (
+            <div key={idx} style={{
+              width: '8px', height: '8px', borderRadius: '50%',
+              backgroundColor: activeSegment === idx ? '#2563EB' : '#cbd5e1',
+              transition: 'background-color 0.3s'
+            }} />
           ))}
         </div>
 
@@ -492,18 +585,33 @@ export default function AccredianEdgeSection() {
           @media (max-width: 900px) {
             .new-audience-banner {
               flex-direction: column;
-              padding: 32px;
+              padding: 40px 20px;
+              border-radius: 0;
+              margin-left: -20px;
+              margin-right: -20px;
+              width: calc(100% + 40px);
+            }
+            .audience-image {
+              display: none;
             }
             .audience-left {
               margin-bottom: 32px;
             }
-            .audience-image {
-              margin-top: 32px;
+            .audience-main-title {
+              font-size: 2rem !important;
             }
-          }
-          @media (max-width: 600px) {
             .audience-right {
               grid-template-columns: 1fr;
+              gap: 24px;
+            }
+            .audience-item {
+              display: flex;
+              align-items: flex-start;
+              gap: 16px;
+            }
+            .audience-item-icon {
+              margin-bottom: 0;
+              flex-shrink: 0;
             }
           }
         `}</style>
@@ -511,11 +619,11 @@ export default function AccredianEdgeSection() {
         <div className={`new-audience-banner animate-on-scroll ${inView ? 'visible' : ''}`} style={{transitionDelay: '400ms'}}>
           <div className="audience-left">
             <p style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '8px' }}>Who Should Join?</p>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '700', lineHeight: '1.2' }}>Strategic Skill Enhancement</h2>
+            <h2 className="audience-main-title" style={{ fontSize: '2.5rem', fontWeight: '700', lineHeight: '1.2' }}>Strategic Skill Enhancement</h2>
             <img src="/images/who_should_join.png" alt="Professionals" className="audience-image" />
           </div>
           <div className="audience-right">
-            <div>
+            <div className="audience-item">
               <div className="audience-item-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -524,10 +632,12 @@ export default function AccredianEdgeSection() {
                   <path d="M9 10l2 2 4-4"/>
                 </svg>
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Tech Professionals</h3>
-              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Enhance expertise, embrace tech, drive innovation.</p>
+              <div className="audience-item-text">
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Tech Professionals</h3>
+                <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Enhance expertise, embrace tech, drive innovation.</p>
+              </div>
             </div>
-            <div>
+            <div className="audience-item">
               <div className="audience-item-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -537,28 +647,34 @@ export default function AccredianEdgeSection() {
                   <line x1="15" y1="7" x2="9" y2="13"/>
                 </svg>
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Non-Tech Professionals</h3>
-              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Adapt digitally, collaborate in tech environments.</p>
+              <div className="audience-item-text">
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Non-Tech Professionals</h3>
+                <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Adapt digitally, collaborate in tech environments.</p>
+              </div>
             </div>
-            <div>
+            <div className="audience-item">
               <div className="audience-item-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                   <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                 </svg>
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Emerging Professionals</h3>
-              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Develop powerful skills for rapid career growth.</p>
+              <div className="audience-item-text">
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Emerging Professionals</h3>
+                <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Develop powerful skills for rapid career growth.</p>
+              </div>
             </div>
-            <div>
+            <div className="audience-item">
               <div className="audience-item-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                 </svg>
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Senior Professionals</h3>
-              <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Strengthen leadership, enhance strategic decisions.</p>
+              <div className="audience-item-text">
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>Senior Professionals</h3>
+                <p style={{ fontSize: '0.9rem', color: '#e0e7ff', lineHeight: '1.5' }}>Strengthen leadership, enhance strategic decisions.</p>
+              </div>
             </div>
           </div>
         </div>
