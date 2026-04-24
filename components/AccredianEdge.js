@@ -417,11 +417,14 @@ export default function AccredianEdgeSection() {
               font-size: 0.8rem;
               line-height: 1.2;
             }
+            .new-domain-card:nth-child(7) {
+              grid-column: span 2;
+            }
           }
         `}</style>
 
         <div className="custom-domain-grid">
-          {domains.slice(0, 6).map((domain, idx) => (
+          {domains.map((domain, idx) => (
             <div key={idx} className="new-domain-card">
               <div className="new-domain-card-icon">
                 {domain.icon}
@@ -429,15 +432,6 @@ export default function AccredianEdgeSection() {
               <div className="new-domain-card-title">{domain.title}</div>
             </div>
           ))}
-        </div>
-        
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div className="new-domain-card" style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-            <div className="new-domain-card-icon">
-              {domains[6].icon}
-            </div>
-            <div className="new-domain-card-title">{domains[6].title}</div>
-          </div>
         </div>
 
         <h2 className={`section-title animate-on-scroll ${inView ? 'visible' : ''}`} style={{marginTop: '80px', marginBottom: '8px', transitionDelay: '200ms'}}>
@@ -491,7 +485,8 @@ export default function AccredianEdgeSection() {
             .segment-grid {
               display: flex !important;
               overflow-x: auto;
-              scroll-snap-type: x mandatory;
+              scroll-snap-type: x proximity;
+              scroll-behavior: smooth;
               gap: 16px;
               padding-bottom: 10px;
               scrollbar-width: none;

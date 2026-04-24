@@ -55,7 +55,7 @@ export default function Clients() {
           .clients-marquee {
             display: flex;
             align-items: center;
-            animation: scroll-clients 15s linear infinite;
+            animation: scroll-clients 30s linear infinite;
           }
           .clients-marquee:hover {
             animation-play-state: paused;
@@ -81,7 +81,7 @@ export default function Clients() {
           }
           @keyframes scroll-clients {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-50%); }
           }
           @media (max-width: 768px) {
             .clients-marquee-content {
