@@ -381,6 +381,11 @@ export default function AccredianEdgeSection() {
             gap: 24px;
             margin-bottom: 24px;
           }
+          @media (min-width: 901px) {
+            .new-domain-card:nth-child(7) {
+              grid-column: 2;
+            }
+          }
           @media (max-width: 900px) {
             .custom-domain-grid {
               grid-template-columns: repeat(2, 1fr);
